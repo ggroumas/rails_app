@@ -1,0 +1,84 @@
+require 'spec_helper'
+
+describe MoviesController do
+
+  before :each do
+  @fake_movie = double('movie')
+  @mirror_movies = double('movies')
+  allow(@fake_movie).to receive(:director) {'Some name'}
+  Movie.should_receive(:find).and_return(@fake_movie)
+  allow(Movie).to receive(:same_director) {@mirror_movies}
+  end
+
+  describe 'similar' do
+    it 'should set a movie info to view' do
+    post :similar, {:id => '1'}
+    assigns(:movie).should eql(@fake_movie)
+    end
+   
+    #happy path
+    it 'should call a model method that returns the movies with same director' do
+    Movie.should_receive(:same_director).and_return(@mirror_movies)
+    post :similar, {:id => '1'}
+    end
+
+    it 'should set similar movies to view' do
+    allow(Movie).to receive(:same_director) {@mirror_movies}
+    post :similar, {:id => '1'}
+    assigns(:movies).should eql(@mirror_movies)
+    end
+
+    #sad path
+    it 'should redirect to the home page' do
+    @fake_movie.should receive(:director).and_return(nil)
+    @fake_movie.should receive(:title).and_return('Some title')
+    post :similar, {:id => '1'}
+    response.should redirect_to movies_path
+    end
+
+    it 'should notice for no director info' do
+    @fake_movie.should receive(:director).and_return(nil)
+    @fake_movie.should receive(:title).and_return('Some title')
+    post :similar, {:id => '1'}
+    @notice = "'Some title' has no director info"
+    flash[:notice].should eql(@notice)
+    end
+
+  end 
+
+
+    
+  describe 'index' do
+      
+     it 'should do shit' do
+     #sorry for watching that :(
+     #get :index 
+     #get :index, :sort => 'title' 
+     #get :index, :ratings => {'R' => 1} 
+     get :index, :sort => 'title', :ratings => {'R' => 1} 
+     #get :index, :sort => 'release_date'
+     #post :create, :movie => {:title => ''}
+     #put :update, :id => '1' , :movie => {:rating => {'R' => 1}}
+    
+     end
+   
+  end
+
+   describe 'edit' do
+     it 'should be ok' do
+       get :edit, :id => '1'
+     end
+   end
+
+   describe 'show' do
+      it 'should be ok' do
+        get :show, :id => '1'
+       end
+   end
+
+  describe 'destroy' do
+      it 'should be ok' do
+        delete :destroy, :id => '1'
+      end
+   end
+end
