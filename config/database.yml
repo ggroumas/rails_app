@@ -21,10 +21,10 @@ test: &test
 production:
   adapter: postgresql
   encoding: unicode
-  database: deveilv18p3161
+  database: 
   pool: 5
-  username:taatlfdwxozgaa
-  password:YI69InobIw_6xPqJjOjXtmha1M 
+  username:
+  password:
 
 cucumber:
   <<: *test
