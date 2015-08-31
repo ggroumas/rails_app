@@ -31,12 +31,12 @@ group :production do
   	
 end
 
-gem 'sass-rails'
+#gem 'sass-rails'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
   gem 'therubyracer'
-  #gem 'sass-rails'
+  gem 'sass-rails'
   gem 'coffee-rails'
   gem 'uglifier'
 end
