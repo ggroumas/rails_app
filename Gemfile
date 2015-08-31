@@ -24,14 +24,14 @@ group :development, :test do
 end
 
 #for deployment on Heroku(locally sqlite and then postgresql) 
-gem "heroku"
+
 group :production do
   gem 'pg'
 #gem thin added as proposed here railsapps.github.io/rails-3-2-example-gemfile.html
-  gem 'thin'	
+  	
 end
 
-gem 'sass-rais'
+gem 'sass-rails'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
